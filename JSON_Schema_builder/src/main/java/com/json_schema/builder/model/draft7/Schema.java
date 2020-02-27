@@ -7,12 +7,11 @@ package com.json_schema.builder.model.draft7;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -20,43 +19,31 @@ import java.util.Map;
  */
 @JsonInclude(Include.NON_NULL)
 public class Schema {
-    private List<Schema> items;
+
     private List<SimpleType> type;
-    private Map<String, Schema> properties;
-    private List<String> required;
+    @JsonProperty("enum")
+    private List<Object> enums;
     private List<Schema> anyOf;
     private List<Schema> allOf;
     private List<Schema> oneOf;
     private String title;
     private String description;
-    private Double minimum;
-    private String format;
-    public Schema(){
+    @JsonProperty("default")
+    private String defaultValue;
+    @JsonProperty("if")
+    private Schema schemaIf;
+    @JsonProperty("then")
+    private Schema schemaThen;
+    @JsonProperty("else")
+    private Schema schemaElse;
+
+    public Schema() {
     }
 
-    @Override
-    public String toString() {
-        return "Schema{" + "items=" + getItems() + ", type=" + getType() + ", properties=" + getProperties() + ", anyOf=" + getAnyOf() + ", allOf=" + getAllOf() + ", oneOf=" + getOneOf() + '}';
-    }
-    
-    public String toJson() throws IOException{
-        // Creating Object of ObjectMapper define in Jakson Api 
+    public String toJson() throws IOException {
+        // Creating Object of ObjectMapper define in Jakson Api
         ObjectMapper Obj = new ObjectMapper();
         return Obj.writeValueAsString(this);
-    }
-
-    /**
-     * @return the items
-     */
-    public List<Schema> getItems() {
-        return items;
-    }
-
-    /**
-     * @param items the items to set
-     */
-    public void setItems(List<Schema> items) {
-        this.items = items;
     }
 
     /**
@@ -70,40 +57,17 @@ public class Schema {
      * @param type the type to set
      */
     public void setType(SimpleType type) {
-        if(this.type == null)
+        if (this.type == null) {
             this.type = new ArrayList();
+        }
         this.type.add(type);
     }
+
     /**
      * @param type the type to set
      */
     public void setType(List<SimpleType> type) {
         this.type = type;
-    }
-
-    /**
-     * @return the properties
-     */
-    public Map<String, Schema> getProperties() {
-        return properties;
-    }
-
-    /**
-     * @param properties the properties to set
-     */
-    public void setProperties(Map<String, Schema> properties) {
-        this.properties = properties;
-    }
-    
-    /**
-     * 
-     * @param propertyName the name of the property
-     * @param schema the schema object to add as schema to the property name
-     */
-    public void addProperty(String propertyName, Schema schema){
-        if(this.properties == null)
-            this.properties = new HashMap();
-        this.properties.put(propertyName, schema);
     }
 
     /**
@@ -177,52 +141,73 @@ public class Schema {
     }
 
     /**
-     * @return the minimum
+     * @return the enums
      */
-    public Double getMinimum() {
-        return minimum;
+    public List<Object> getEnums() {
+        return enums;
     }
 
     /**
-     * @param minimum the minimum to set
+     * @param enums the enums to set
      */
-    public void setMinimum(Double minimum) {
-        this.minimum = minimum;
+    public void setEnums(List<Object> enums) {
+        this.enums = enums;
     }
 
     /**
-     * @return the format
+     * @return the defaultValue
      */
-    public String getFormat() {
-        return format;
+    public String getDefaultValue() {
+        return defaultValue;
     }
 
     /**
-     * @param format the format to set
+     * @param defaultValue the defaultValue to set
      */
-    public void setFormat(String format) {
-        this.format = format;
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 
     /**
-     * @return the required
+     * @return the schemaIf
      */
-    public List<String> getRequired() {
-        return required;
+    public Schema getSchemaIf() {
+        return schemaIf;
     }
 
     /**
-     * @param required the required to set
+     * @param schemaIf the schemaIf to set
      */
-    public void setRequired(List<String> required) {
-        this.required = required;
+    public void setSchemaIf(Schema schemaIf) {
+        this.schemaIf = schemaIf;
     }
+
     /**
-     * @param property the required property
+     * @return the schemaThen
      */
-    public void addRequired(String property) {
-        if(this.required == null)
-            this.required = new ArrayList();
-        this.required.add(property);
+    public Schema getSchemaThen() {
+        return schemaThen;
     }
+
+    /**
+     * @param schemaThen the schemaThen to set
+     */
+    public void setSchemaThen(Schema schemaThen) {
+        this.schemaThen = schemaThen;
+    }
+
+    /**
+     * @return the schemaElse
+     */
+    public Schema getSchemaElse() {
+        return schemaElse;
+    }
+
+    /**
+     * @param schemaElse the schemaElse to set
+     */
+    public void setSchemaElse(Schema schemaElse) {
+        this.schemaElse = schemaElse;
+    }
+
 }

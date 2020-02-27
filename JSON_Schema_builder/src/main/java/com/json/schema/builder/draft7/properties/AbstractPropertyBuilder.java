@@ -9,78 +9,66 @@ import com.json.schema.builder.draft7.ObjectSchemaBuilder;
 import com.json.schema.builder.draft7.SchemaBuilder;
 import com.json.schema.builder.draft7.SecondaryBuilders;
 import com.json_schema.builder.model.draft7.Schema;
-import com.json_schema.builder.model.draft7.SimpleType;
 
 /**
  *
  * @author lagoni
  * @param <T>
  */
-public abstract class AbstractPropertyBuilder <T extends AbstractPropertyBuilder> extends SchemaBuilder implements SecondaryBuilders<ObjectSchemaBuilder>{
-    private Schema schema;
+public abstract class AbstractPropertyBuilder<T extends AbstractPropertyBuilder, U extends Schema> extends SchemaBuilder implements SecondaryBuilders<ObjectSchemaBuilder> {
+
+    private U schema;
     private ObjectSchemaBuilder ob;
-    protected AbstractPropertyBuilder(){
-        this(new Schema());
-    }
-    protected AbstractPropertyBuilder(Schema schema){
+
+    protected AbstractPropertyBuilder(U schema) {
         this.setSchema(schema);
     }
-    protected AbstractPropertyBuilder(ObjectSchemaBuilder ob){
-        this(ob, new Schema());
-    }
-    protected AbstractPropertyBuilder(ObjectSchemaBuilder ob, Schema schema){
+
+    protected AbstractPropertyBuilder(ObjectSchemaBuilder ob, U schema) {
         this.setSchema(schema);
         this.ob = ob;
     }
-    
+
 // <editor-fold desc="Methods for fluent interface">
-    
     /**
-     * 
-     * @param type
-     * @return 
-     */
-    public T type(SimpleType type){
-        this.getSchema().setType(type);
-        return (T)this;
-    }
-    /**
-     * 
+     *
      * @param title
-     * @return 
+     * @return
      */
-    public T title(String title){
+    public T title(String title) {
         this.getSchema().setTitle(title);
-        return (T)this;
+        return (T) this;
     }
+
     /**
-     * 
+     *
      * @param description
-     * @return 
+     * @return
      */
-    public T description(String description){
+    public T description(String description) {
         this.getSchema().setDescription(description);
-        return (T)this;
+        return (T) this;
     }
 // </editor-fold>
-    
+
     /**
      * @param schema the schema to set
      */
-    protected void setSchema(Schema schema){
+    protected void setSchema(U schema) {
         this.schema = schema;
     }
 
     /**
      * @return the schema
      */
-    protected Schema getSchema() {
+    protected U getSchema() {
         return schema;
     }
-    
+
     /**
-     * 
-     * @return The root schema, either the local schema in this builder or from ObjectSchemaBuilder.
+     *
+     * @return The root schema, either the local schema in this builder or from
+     * ObjectSchemaBuilder.
      */
     @Override
     public Schema build() {
@@ -89,6 +77,7 @@ public abstract class AbstractPropertyBuilder <T extends AbstractPropertyBuilder
 
     /**
      * Finishes a local build and returns to previous ObjectSchemaBuilder
+     *
      * @return null if this is not in conjunction with an ObjectSchemaBuilder
      */
     @Override

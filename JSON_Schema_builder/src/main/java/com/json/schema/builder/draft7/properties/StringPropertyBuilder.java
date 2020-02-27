@@ -7,48 +7,53 @@ package com.json.schema.builder.draft7.properties;
 
 import com.json.schema.builder.draft7.ObjectSchemaBuilder;
 import com.json_schema.builder.model.draft7.Schema;
-import com.json_schema.builder.model.draft7.SimpleType;
+import com.json_schema.builder.model.draft7.StringFormat;
+import com.json_schema.builder.model.draft7.StringSchema;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author lagoni
  */
-public class StringPropertyBuilder extends AbstractPropertyBuilder<StringPropertyBuilder>{
+public class StringPropertyBuilder extends AbstractPropertyBuilder<StringPropertyBuilder, StringSchema> {
 
     public StringPropertyBuilder() {
-        super();
+        this(new StringSchema());
     }
 
-    public StringPropertyBuilder(Schema schema) {
+    public StringPropertyBuilder(StringSchema schema) {
         super(schema);
     }
 
     public StringPropertyBuilder(ObjectSchemaBuilder ob) {
-        super(ob);
+        this(ob, new StringSchema());
     }
 
-    public StringPropertyBuilder(ObjectSchemaBuilder ob, Schema schema) {
+    public StringPropertyBuilder(ObjectSchemaBuilder ob, StringSchema schema) {
         super(ob, schema);
     }
 
 // <editor-fold desc="Methods for fluent interface">
     /**
-     * 
+     *
      * @param format
-     * @return 
+     * @return
      */
-    public StringPropertyBuilder format(String format){
+    public StringPropertyBuilder format(StringFormat format) {
         this.getSchema().setFormat(format);
         return this;
     }
-    
-// </editor-fold>
-    
-    @Override
-    protected void setSchema(Schema schema) {
-        super.setSchema(schema);
-        schema.setType(SimpleType.STRING);
-    }
-    
-}
 
+    public StringPropertyBuilder allOfFormats(List<StringFormat> formats) {
+        List<Schema> formatSchemas = new ArrayList();
+        for (StringFormat f : formats) {
+            StringSchema formatSchema = new StringSchema();
+            formatSchema.setFormat(f);
+        }
+        this.getSchema().setAllOf(formatSchemas);
+        return this;
+    }
+
+// </editor-fold>
+}

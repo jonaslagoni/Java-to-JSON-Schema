@@ -6,35 +6,28 @@
 package com.json.schema.builder.draft7.properties;
 
 import com.json.schema.builder.draft7.ObjectSchemaBuilder;
-import com.json_schema.builder.model.draft7.Schema;
-import com.json_schema.builder.model.draft7.SimpleType;
+import com.json_schema.builder.model.draft7.NumberSchema;
 
 /**
  *
  * @author lagoni
  */
-public class NumberPropertyBuilder extends AbstractPropertyBuilder<NumberPropertyBuilder>{
+public class NumberPropertyBuilder extends AbstractPropertyBuilder<NumberPropertyBuilder, NumberSchema> {
 
     public NumberPropertyBuilder() {
-        super();
+        this(new NumberSchema());
     }
 
-    public NumberPropertyBuilder(Schema schema) {
+    public NumberPropertyBuilder(NumberSchema schema) {
         super(schema);
     }
 
     public NumberPropertyBuilder(ObjectSchemaBuilder ob) {
-        super(ob);
+        this(ob, new NumberSchema());
     }
 
-    public NumberPropertyBuilder(ObjectSchemaBuilder ob, Schema schema) {
+    public NumberPropertyBuilder(ObjectSchemaBuilder ob, NumberSchema schema) {
         super(ob, schema);
     }
 
-    @Override
-    protected void setSchema(Schema schema) {
-        super.setSchema(schema);
-        schema.setType(SimpleType.NUMBER);
-    }
-    
 }
