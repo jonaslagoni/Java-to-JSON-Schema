@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.json.schema.builder.draft7;
+package com.json.schema.builder.draft7.Test;
 
 /**
  *
  * @author Lagoni
- * @param <ParentBuilder>
+ * @param <T>
  */
-public abstract class Builder<ParentBuilder extends Builder<ParentBuilder>> {
+public abstract class Builder<T extends Builder<T>> {
 
+    private T parentBuilder;
+
+    public abstract T parent();
 }

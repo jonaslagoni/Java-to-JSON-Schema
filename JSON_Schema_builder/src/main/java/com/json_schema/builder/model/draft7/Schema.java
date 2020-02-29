@@ -28,14 +28,13 @@ public class Schema {
     private List<Schema> oneOf;
     private String title;
     private String description;
-    @JsonProperty("default")
-    private String defaultValue;
     @JsonProperty("if")
     private Schema schemaIf;
     @JsonProperty("then")
     private Schema schemaThen;
     @JsonProperty("else")
     private Schema schemaElse;
+    private Schema not;
 
     public Schema() {
     }
@@ -155,20 +154,6 @@ public class Schema {
     }
 
     /**
-     * @return the defaultValue
-     */
-    public String getDefaultValue() {
-        return defaultValue;
-    }
-
-    /**
-     * @param defaultValue the defaultValue to set
-     */
-    public void setDefaultValue(String defaultValue) {
-        this.defaultValue = defaultValue;
-    }
-
-    /**
      * @return the schemaIf
      */
     public Schema getSchemaIf() {
@@ -208,6 +193,20 @@ public class Schema {
      */
     public void setSchemaElse(Schema schemaElse) {
         this.schemaElse = schemaElse;
+    }
+
+    /**
+     * @return the not
+     */
+    public Schema getNot() {
+        return not;
+    }
+
+    /**
+     * @param not the not to set
+     */
+    public void setNot(Schema not) {
+        this.not = not;
     }
 
 }

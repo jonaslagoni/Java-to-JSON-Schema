@@ -17,12 +17,12 @@ import org.junit.jupiter.api.Test;
 public class SchemaBuilderTest {
     
     /**
-     * Test of object method, of class SchemaBuilder.
+     * Test of object method, of class MainSchemaBuilder.
      */
     @Test
     public void testSimpleStringObject() throws IOException {
         System.out.println("object");
-        SchemaBuilder instance = new SchemaBuilder();
+        MainSchemaBuilder instance = new MainSchemaBuilder();
         instance.object().stringProperty("TestProp");
         String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProp\":{\"type\":[\"string\"],\"title\":\"TestProp\"}}}";
         String result = instance.build().toJson();
@@ -30,12 +30,12 @@ public class SchemaBuilderTest {
     }
     
     /**
-     * Test of object method, of class SchemaBuilder.
+     * Test of object method, of class MainSchemaBuilder.
      */
     @Test
     public void testSimpleStringObjectWithDescription() throws IOException {
         System.out.println("object");
-        SchemaBuilder instance = new SchemaBuilder();
+        MainSchemaBuilder instance = new MainSchemaBuilder();
         instance.object().stringProperty("TestProp").description("TestDescription");
         String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProp\":{\"type\":[\"string\"],\"title\":\"TestProp\",\"description\":\"TestDescription\"}}}";
         String result = instance.build().toJson();

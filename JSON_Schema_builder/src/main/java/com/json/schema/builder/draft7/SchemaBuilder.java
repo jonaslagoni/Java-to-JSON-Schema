@@ -9,28 +9,69 @@ import com.json_schema.builder.model.draft7.Schema;
 
 /**
  *
- * @author lagoni
+ * @author Lagoni
+ * @param <ParentBuilder>
+ * @param <ActiveBuilder>
+ * @param <BuilderSchema>
  */
-public class SchemaBuilder implements Builder{
-    private Schema schema;
-    public SchemaBuilder(){
-        this.schema = new Schema();
-    }
-    public SchemaBuilder(Schema schema){
-        this.schema = schema;
-    }
-    public ObjectSchemaBuilder object(){
-        return new ObjectSchemaBuilder(this, this.schema);
-    }
-    public AllOfBuilder allOf(){
-        return new AllOfBuilder(this.schema);
+public abstract class SchemaBuilder<ParentBuilder extends Builder<ParentBuilder>, ActiveBuilder extends SchemaBuilder, BuilderSchema extends Schema> extends Builder {
+
+    private ParentBuilder parentBuilder;
+    private BuilderSchema schema;
+
+// <editor-fold desc="Methods for fluent interface">
+    public ActiveBuilder title(String title) {
+        this.getSchema().setTitle(title);
+        return (ActiveBuilder) this;
     }
 
-    @Override
-    public Schema build() {
-        return this.schema;
+    public ActiveBuilder description(String description) {
+        this.getSchema().setDescription(description);
+        return (ActiveBuilder) this;
     }
-    protected void setRootSchema(Schema schema){
+
+//    public abstract <T extends Builder> T anyOf();
+//
+//    public abstract ActiveBuilder allOf();
+//
+//    public abstract ActiveBuilder oneOf();
+//
+//    public abstract ActiveBuilder enums();
+//
+//    public abstract ActiveBuilder conditionalIf();
+//
+//    public abstract ActiveBuilder conditionalThen();
+//
+//    public abstract ActiveBuilder conditionalElse();
+//
+//    public abstract ActiveBuilder conditionalNot();
+// </editor-fold>
+    /**
+     * @return the schema
+     */
+    public BuilderSchema getSchema() {
+        return schema;
+    }
+
+    /**
+     * @param schema the schema to set
+     */
+    public void setSchema(BuilderSchema schema) {
         this.schema = schema;
     }
+
+    /**
+     * @return the parentBuilder
+     */
+    public ParentBuilder getParentBuilder() {
+        return parentBuilder;
+    }
+
+    /**
+     * @param parentBuilder the parentBuilder to set
+     */
+    public void setParentBuilder(ParentBuilder parentBuilder) {
+        this.parentBuilder = parentBuilder;
+    }
+
 }

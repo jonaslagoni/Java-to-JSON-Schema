@@ -6,6 +6,8 @@
 
 - References
 - [\$schema](https://json-schema.org/understanding-json-schema/reference/schema.html#the-schema-keyword)
+- [Constant values](https://json-schema.org/understanding-json-schema/reference/generic.html#constant-values)
+- [Defaults](https://json-schema.org/understanding-json-schema/reference/generic.html#annotations)
 
 #### String
 
@@ -16,3 +18,4 @@
 - [Property names](https://json-schema.org/understanding-json-schema/reference/object.html#property-names)
 - [Dependencies](https://json-schema.org/understanding-json-schema/reference/object.html#dependencies) - [Schema dependencies](https://json-schema.org/understanding-json-schema/reference/object.html#schema-dependencies)
 - [Pattern Properties](https://json-schema.org/understanding-json-schema/reference/object.html#pattern-properties)
+- Definitions

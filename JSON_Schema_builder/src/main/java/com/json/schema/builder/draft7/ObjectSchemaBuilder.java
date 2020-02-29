@@ -5,117 +5,89 @@
  */
 package com.json.schema.builder.draft7;
 
-import com.json.schema.builder.draft7.properties.AbstractPropertyBuilder;
-import com.json.schema.builder.draft7.properties.IntegerPropertyBuilder;
-import com.json.schema.builder.draft7.properties.NumberPropertyBuilder;
-import com.json.schema.builder.draft7.properties.StringPropertyBuilder;
+import com.json_schema.builder.model.draft7.IntegerSchema;
+import com.json_schema.builder.model.draft7.NumberSchema;
+import com.json_schema.builder.model.draft7.ObjectSchema;
 import com.json_schema.builder.model.draft7.Schema;
-import com.json_schema.builder.model.draft7.SimpleType;
+import com.json_schema.builder.model.draft7.StringSchema;
 
 /**
  *
  * @author lagoni
+ * @param <ParentBuilder>
  */
-public class ObjectSchemaBuilder implements SecondaryBuilders<SchemaBuilder>{
-    private Schema schema;
-    private ObjectSchemaBuilder ob;
-    private SchemaBuilder sb;
-    
-    public ObjectSchemaBuilder(SchemaBuilder sb, Schema schema){
-        this(schema);
-        this.sb = sb;
+public class ObjectSchemaBuilder<ParentBuilder extends Builder> extends SchemaBuilder<ParentBuilder, ObjectSchemaBuilder, ObjectSchema> {
+
+    public ObjectSchemaBuilder(ParentBuilder parentBuilder, ObjectSchema schema) {
+        super.setSchema(schema);
+        super.setParentBuilder(parentBuilder);
     }
-    public ObjectSchemaBuilder(ObjectSchemaBuilder ob, Schema schema){
-        this(schema);
-        this.ob = ob;
-    }
-    public ObjectSchemaBuilder(ObjectSchemaBuilder ob){
-        this(ob, new Schema());
-    }
-    public ObjectSchemaBuilder(SchemaBuilder sb){
-        this(sb, new Schema());
-    }
-    public ObjectSchemaBuilder(){
-        this(new Schema());
-    }
-    public ObjectSchemaBuilder(Schema schema){
-        this.setSchema(schema);
-    }
-    
-    
-    
+
 // <editor-fold desc="Methods for fluent interface">
-    
+    public ObjectSchemaBuilder requiredProperty(String propertyName) {
+        this.addRequiredPropertyToSchema(propertyName);
+        return this;
+    }
+
+    public AllOfSchemaBuilder anyOf() {
+        return new AllOfSchemaBuilder();
+    }
+
 // <editor-fold desc="Properties">
-    
-    
-    public ObjectSchemaBuilder objectProperty(String propertyName){
+    public ObjectSchemaBuilder<ObjectSchemaBuilder> objectProperty(String propertyName) {
         return this.objectProperty(propertyName, false);
     }
-    public ObjectSchemaBuilder objectProperty(String propertyName, boolean required){
-        return new ObjectSchemaBuilder(this, this.property(propertyName, required));
+
+    public ObjectSchemaBuilder<ObjectSchemaBuilder> objectProperty(String propertyName, boolean required) {
+        ObjectSchema newSchema = new ObjectSchema();
+        this.property(newSchema, propertyName, required);
+        return new ObjectSchemaBuilder(this, newSchema);
     }
-    
-    public StringPropertyBuilder stringProperty(String propertyName){
+
+    public StringSchemaBuilder<ObjectSchemaBuilder> stringProperty(String propertyName) {
         return this.stringProperty(propertyName, false);
     }
-    public StringPropertyBuilder stringProperty(String propertyName, boolean required){
-        return new StringPropertyBuilder(this, this.property(propertyName, required)).title(propertyName);
+
+    public StringSchemaBuilder<ObjectSchemaBuilder> stringProperty(String propertyName, boolean required) {
+        StringSchema newSchema = new StringSchema();
+        this.property(newSchema, propertyName, required);
+        return new StringSchemaBuilder(this, newSchema);
     }
-    
-    
-    public IntegerPropertyBuilder integerProperty(String propertyName){
+
+    public IntegerSchemaBuilder<ObjectSchemaBuilder> integerProperty(String propertyName) {
         return this.integerProperty(propertyName, false);
     }
-    public IntegerPropertyBuilder integerProperty(String propertyName, boolean required){
-        return new IntegerPropertyBuilder(this, this.property(propertyName, required)).title(propertyName);
+
+    public IntegerSchemaBuilder<ObjectSchemaBuilder> integerProperty(String propertyName, boolean required) {
+        IntegerSchema newSchema = new IntegerSchema();
+        this.property(newSchema, propertyName, required);
+        return new IntegerSchemaBuilder(this, newSchema);
     }
-    
-    public NumberPropertyBuilder numberProperty(String propertyName){
+
+    public NumberSchemaBuilder<ObjectSchemaBuilder> numberProperty(String propertyName) {
         return this.numberProperty(propertyName, false);
     }
-    public NumberPropertyBuilder numberProperty(String propertyName, boolean required){
-        return new NumberPropertyBuilder(this, this.property(propertyName, required)).title(propertyName);
+
+    public NumberSchemaBuilder<ObjectSchemaBuilder> numberProperty(String propertyName, boolean required) {
+        NumberSchema newSchema = new NumberSchema();
+        this.property(newSchema, propertyName, required);
+        return new NumberSchemaBuilder(this, newSchema);
     }
-    
-    private Schema property(String propertyName, boolean required){
-        Schema schema = new Schema();
-        this.schema.addProperty(propertyName, schema);
-        if(required)
-            this.schema.addRequired(propertyName);
-        return schema;
+
+// </editor-fold>
+// </editor-fold>
+    private void addRequiredPropertyToSchema(String propertyName) {
+        this.getSchema().addRequired(propertyName);
     }
-    
-// </editor-fold>
-    
-// </editor-fold>
-    
-    
-    /**
-     * 
-     * @return 
-     */
-    @Override
-    public SchemaBuilder done() {
-        if(sb == null){
-            sb = new SchemaBuilder();
-            sb.setRootSchema(schema);
+
+    private <GenericSchema extends Schema> void property(GenericSchema newObjectSchema, String propertyName, boolean required) {
+        this.getSchema().addProperty(propertyName, newObjectSchema);
+        if (required) {
+            this.addRequiredPropertyToSchema(propertyName);
         }
-        return sb;
     }
 
-    @Override
-    public Schema build() {
-        return sb.build();
+    public ParentBuilder done() {
+        return super.getParentBuilder();
     }
-
-
-    /**
-     * @param schema the schema to set
-     */
-    private void setSchema(Schema schema) {
-        this.schema = schema;
-        this.schema.setType(SimpleType.OBJECT);
-    }
-    
 }

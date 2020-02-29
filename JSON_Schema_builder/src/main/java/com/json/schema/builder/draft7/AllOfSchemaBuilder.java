@@ -5,12 +5,10 @@
  */
 package com.json.schema.builder.draft7;
 
-import com.json_schema.builder.model.draft7.Schema;
-
 /**
  *
- * @author lagoni
+ * @author Lagoni
  */
-public interface SecondaryBuilders <T> extends Builder{
-    public T done();
+public class AllOfSchemaBuilder<ParentBuilder extends Builder> {
+
 }
