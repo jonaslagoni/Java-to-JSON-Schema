@@ -8,8 +8,8 @@ package com.json_schema.builder.model.draft7;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class Schema {
     public Schema() {
     }
 
-    public String toJson() throws IOException {
+    public String toJson() throws JsonProcessingException {
         // Creating Object of ObjectMapper define in Jakson Api
         ObjectMapper Obj = new ObjectMapper();
         return Obj.writeValueAsString(this);
@@ -56,7 +56,7 @@ public class Schema {
     /**
      * @param type the type to set
      */
-    public void setType(SimpleType type) {
+    public void addType(SimpleType type) {
         if (this.type == null) {
             this.type = new ArrayList();
         }
@@ -85,6 +85,17 @@ public class Schema {
     }
 
     /**
+     *
+     * @param schema to add
+     */
+    public void addAnyOf(Schema schema) {
+        if (this.anyOf == null) {
+            this.anyOf = new ArrayList();
+        }
+        this.anyOf.add(schema);
+    }
+
+    /**
      * @return the allOf
      */
     public List<Schema> getAllOf() {
@@ -99,6 +110,17 @@ public class Schema {
     }
 
     /**
+     *
+     * @param schema to add
+     */
+    public void addAllOf(Schema schema) {
+        if (this.allOf == null) {
+            this.allOf = new ArrayList();
+        }
+        this.allOf.add(schema);
+    }
+
+    /**
      * @return the oneOf
      */
     public List<Schema> getOneOf() {
@@ -110,6 +132,17 @@ public class Schema {
      */
     public void setOneOf(List<Schema> oneOf) {
         this.oneOf = oneOf;
+    }
+
+    /**
+     *
+     * @param schema to add
+     */
+    public void addOneOf(Schema schema) {
+        if (this.oneOf == null) {
+            this.oneOf = new ArrayList();
+        }
+        this.oneOf.add(schema);
     }
 
     /**

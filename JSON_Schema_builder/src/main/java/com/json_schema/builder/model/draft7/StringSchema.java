@@ -13,10 +13,14 @@ public class StringSchema extends Schema {
 
     private String pattern;
     private StringFormat format;
-    private int minLength;
-    private int maxLength;
+    private Integer minLength;
+    private Integer maxLength;
     private ContentEncoding contentEncoding;
     private String contentMediaType;
+
+    public StringSchema() {
+        super.addType(SimpleType.STRING);
+    }
 
     /**
      * @return the pattern
@@ -49,28 +53,28 @@ public class StringSchema extends Schema {
     /**
      * @return the minLength
      */
-    public int getMinLength() {
+    public Integer getMinLength() {
         return minLength;
     }
 
     /**
      * @param minLength the minLength to set
      */
-    public void setMinLength(int minLength) {
+    public void setMinLength(Integer minLength) {
         this.minLength = minLength;
     }
 
     /**
      * @return the maxLength
      */
-    public int getMaxLength() {
+    public Integer getMaxLength() {
         return maxLength;
     }
 
     /**
      * @param maxLength the maxLength to set
      */
-    public void setMaxLength(int maxLength) {
+    public void setMaxLength(Integer maxLength) {
         this.maxLength = maxLength;
     }
 

@@ -5,6 +5,7 @@
  */
 package com.json_schema.builder.model.draft7;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,13 +16,13 @@ public class ArraySchema extends Schema {
 
     private List<Schema> items;
     private List<Schema> contains;
-    private Object additionalItems;
+    private Boolean additionalItems;
     private Integer minItems;
     private Integer maxItems;
     private Boolean uniqueItems;
 
     public ArraySchema() {
-        super.setType(SimpleType.ARRAY);
+        super.addType(SimpleType.ARRAY);
     }
 
     /**
@@ -39,6 +40,16 @@ public class ArraySchema extends Schema {
     }
 
     /**
+     * @param item the schema item to addType
+     */
+    public void addItem(Schema item) {
+        if (this.items == null) {
+            this.items = new ArrayList();
+        }
+        this.items.add(item);
+    }
+
+    /**
      * @return the contains
      */
     public List<Schema> getContains() {
@@ -53,6 +64,16 @@ public class ArraySchema extends Schema {
     }
 
     /**
+     * @param contain the schema to contain
+     */
+    public void addContain(Schema contain) {
+        if (this.contains == null) {
+            this.contains = new ArrayList();
+        }
+        this.contains.add(contain);
+    }
+
+    /**
      * @return the additionalItems
      */
     public Object getAdditionalItems() {
@@ -62,7 +83,7 @@ public class ArraySchema extends Schema {
     /**
      * @param additionalItems the additionalItems to set
      */
-    public void setAdditionalItems(Object additionalItems) {
+    public void setAdditionalItems(Boolean additionalItems) {
         this.additionalItems = additionalItems;
     }
 

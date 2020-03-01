@@ -21,10 +21,9 @@ public class ObjectSchema extends Schema {
     private Integer minProperties;
     private Integer maxProperties;
     private Map<String, List<String>> dependencies;
-    private String propertyNames;
 
     public ObjectSchema() {
-        super.setType(SimpleType.OBJECT);
+        super.addType(SimpleType.OBJECT);
     }
 
     /**
@@ -44,7 +43,7 @@ public class ObjectSchema extends Schema {
     /**
      *
      * @param propertyName the name of the property
-     * @param schema the schema object to add as schema to the property name
+     * @param schema the schema object to addType as schema to the property name
      */
     public void addProperty(String propertyName, Schema schema) {
         if (this.properties == null) {
@@ -119,17 +118,4 @@ public class ObjectSchema extends Schema {
         this.dependencies = dependencies;
     }
 
-    /**
-     * @return the propertyNames
-     */
-    public String getPropertyNames() {
-        return propertyNames;
-    }
-
-    /**
-     * @param propertyNames the propertyNames to set
-     */
-    public void setPropertyNames(String propertyNames) {
-        this.propertyNames = propertyNames;
-    }
 }

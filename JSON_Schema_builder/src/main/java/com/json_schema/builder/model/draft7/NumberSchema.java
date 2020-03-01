@@ -12,6 +12,6 @@ package com.json_schema.builder.model.draft7;
 public class NumberSchema extends NumericSchema {
 
     public NumberSchema() {
-        super.setType(SimpleType.NUMBER);
+        super.addType(SimpleType.NUMBER);
     }
 }

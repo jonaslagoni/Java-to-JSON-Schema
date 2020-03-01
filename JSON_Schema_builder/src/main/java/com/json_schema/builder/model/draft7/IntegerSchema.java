@@ -12,6 +12,6 @@ package com.json_schema.builder.model.draft7;
 public class IntegerSchema extends NumericSchema {
 
     public IntegerSchema() {
-        super.setType(SimpleType.INTEGER);
+        super.addType(SimpleType.INTEGER);
     }
 }

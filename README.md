@@ -1,6 +1,13 @@
 # JSON Schema Draft 7 builder
 
-## JSON Schema draft 7 model
+### Not supported
+
+#### Object
+
+- dependencies
+- propertyNames
+
+# JSON Schema draft 7 model
 
 ### Not supported
 

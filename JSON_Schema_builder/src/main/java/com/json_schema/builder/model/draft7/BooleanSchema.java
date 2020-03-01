@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.json.schema.builder.draft7;
-
-import com.json_schema.builder.model.draft7.Schema;
+package com.json_schema.builder.model.draft7;
 
 /**
  *
- * @author lagoni
+ * @author Lagoni
  */
-public interface Builder {
-    public Schema build();
+public class BooleanSchema extends Schema {
+
+    public BooleanSchema() {
+        super.addType(SimpleType.BOOLEAN);
+    }
 }

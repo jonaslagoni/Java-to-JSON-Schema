@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author lagoni
  */
 public class SchemaTest {
-   
+
     /**
      * Test of setItems method, of class Schema.
      */
@@ -28,16 +28,15 @@ public class SchemaTest {
         itemSchema.setTitle("TestTitle");
         List<Schema> items = new ArrayList();
         items.add(itemSchema);
-        Schema instance = new Schema();
+        ArraySchema instance = new ArraySchema();
         instance.setItems(items);
-        String expResult = "{\"items\":[{\"title\":\"TestTitle\"}]}";
+        String expResult = "{\"type\":[\"array\"],\"items\":[{\"title\":\"TestTitle\"}]}";
         String result = instance.toJson();
         assertEquals(expResult, result);
     }
 
-
     /**
-     * Test of setType method, of class Schema.
+     * Test of addType method, of class Schema.
      */
     @Test
     public void testSetType() throws Exception {
@@ -61,13 +60,12 @@ public class SchemaTest {
         propertySchema.setTitle("TestTitle");
         Map<String, Schema> properties = new HashMap();
         properties.put("TestProperty", propertySchema);
-        Schema instance = new Schema();
+        ObjectSchema instance = new ObjectSchema();
         instance.setProperties(properties);
-        String expResult = "{\"properties\":{\"TestProperty\":{\"title\":\"TestTitle\"}}}";
+        String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProperty\":{\"title\":\"TestTitle\"}}}";
         String result = instance.toJson();
         assertEquals(expResult, result);
     }
-
 
     /**
      * Test of setAnyOf method, of class Schema.
@@ -85,7 +83,6 @@ public class SchemaTest {
         String result = instance.toJson();
         assertEquals(expResult, result);
     }
-
 
     /**
      * Test of setAllOf method, of class Schema.
@@ -121,7 +118,6 @@ public class SchemaTest {
         assertEquals(expResult, result);
     }
 
-
     /**
      * Test of setTitle method, of class Schema.
      */
@@ -147,5 +143,5 @@ public class SchemaTest {
         String result = instance.toJson();
         assertEquals(expResult, result);
     }
-    
+
 }

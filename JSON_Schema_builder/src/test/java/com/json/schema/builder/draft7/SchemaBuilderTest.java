@@ -5,9 +5,10 @@
  */
 package com.json.schema.builder.draft7;
 
+import com.json_schema.builder.draft7.JsonSchemaBuilder;
+import com.json_schema.builder.model.draft7.SimpleType;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -15,32 +16,57 @@ import org.junit.jupiter.api.Test;
  * @author lagoni
  */
 public class SchemaBuilderTest {
-    
+
     /**
      * Test of object method, of class SchemaBuilder.
      */
     @Test
     public void testSimpleStringObject() throws IOException {
         System.out.println("object");
-        SchemaBuilder instance = new SchemaBuilder();
-        instance.object().stringProperty("TestProp");
-        String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProp\":{\"type\":[\"string\"],\"title\":\"TestProp\"}}}";
+        JsonSchemaBuilder instance = new JsonSchemaBuilder();
+        instance.object().property("TestProp", SimpleType.STRING);
+        String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProp\":{\"type\":[\"string\"]}}}";
         String result = instance.build().toJson();
         assertEquals(expResult, result);
     }
-    
+
+    /**
+     * Test of object method, of class SchemaBuilder.
+     */
+    @Test
+    public void testSimpleStringObjectWithTitle() throws IOException {
+        System.out.println("object");
+        JsonSchemaBuilder instance = new JsonSchemaBuilder();
+        instance.object().property("TestProp", SimpleType.STRING).title("TestTitle");
+        String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProp\":{\"type\":[\"string\"],\"title\":\"TestTitle\"}}}";
+        String result = instance.build().toJson();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of object method, of class SchemaBuilder.
+     */
+    @Test
+    public void testSimpleStringObjectWithDescriptionAndTitle() throws IOException {
+        System.out.println("object");
+        JsonSchemaBuilder instance = new JsonSchemaBuilder();
+        instance.object().property("TestProp", SimpleType.STRING).description("TestDescription").title("TestTitle");
+        String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProp\":{\"type\":[\"string\"],\"title\":\"TestTitle\",\"description\":\"TestDescription\"}}}";
+        String result = instance.build().toJson();
+        assertEquals(expResult, result);
+    }
+
     /**
      * Test of object method, of class SchemaBuilder.
      */
     @Test
     public void testSimpleStringObjectWithDescription() throws IOException {
         System.out.println("object");
-        SchemaBuilder instance = new SchemaBuilder();
-        instance.object().stringProperty("TestProp").description("TestDescription");
-        String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProp\":{\"type\":[\"string\"],\"title\":\"TestProp\",\"description\":\"TestDescription\"}}}";
+        JsonSchemaBuilder instance = new JsonSchemaBuilder();
+        instance.object().property("TestProp", SimpleType.STRING).description("TestDescription");
+        String expResult = "{\"type\":[\"object\"],\"properties\":{\"TestProp\":{\"type\":[\"string\"],\"description\":\"TestDescription\"}}}";
         String result = instance.build().toJson();
         assertEquals(expResult, result);
     }
 
-    
 }
