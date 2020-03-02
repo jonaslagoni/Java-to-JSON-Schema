@@ -12,6 +12,7 @@ import java.util.Deque;
 /**
  *
  * @author Lagoni
+ * @param <T>
  */
 public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
@@ -20,28 +21,56 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     private Schema currentSchema;
 
     // <editor-fold desc="Schema builder">
+    
+    /**
+     * Initiate a JSON Schema as a root Null schema.
+     * 
+     * @return this
+     */
     public T nullSchema() {
         currentSchema = new NullSchema();
         rootSchema = currentSchema;
         return (T) this;
     }
 
+    /**
+     * Initiate a JSON Schema as a root boolean schema.
+     * 
+     * @return this
+     */
     public T booleanSchema() {
         currentSchema = new BooleanSchema();
         rootSchema = currentSchema;
         return (T) this;
     }
 
+    /**
+     * Set the title of the current schema.
+     * 
+     * @param title to set
+     * @return this
+     */
     public T title(String title) {
         currentSchema.setTitle(title);
         return (T) this;
     }
 
+    /**
+     * Set the description of the current schema.
+     * 
+     * @param description to set
+     * @return this
+     */
     public T description(String description) {
         currentSchema.setDescription(description);
         return (T) this;
     }
 
+    /**
+     * Initiate an else schema
+     * 
+     * @return this
+     */
     public T elseDo() {
         Schema newSchema = initSchemaFromCurrent();
         if (newSchema != null) {
@@ -53,6 +82,11 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Initiate a then schema
+     * 
+     * @return this
+     */
     public T thenDo() {
         Schema newSchema = initSchemaFromCurrent();
         if (newSchema != null) {
@@ -64,6 +98,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    
+    /**
+     * Initiate an if schema
+     * 
+     * @return this
+     */
     public T ifCondition() {
         Schema newSchema = initSchemaFromCurrent();
         if (newSchema != null) {
@@ -75,6 +115,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Initiate a oneOf schema.
+     * 
+     * @param type of JSON Schema which should be used
+     * @return this
+     */
     public T oneOf(SimpleType type) {
         Schema newSchema = initSchema(type);
         if (newSchema != null) {
@@ -86,6 +132,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Initiate an allOf schema.
+     * 
+     * @param type of JSON Schema which should be used
+     * @return this
+     */
     public T allOf(SimpleType type) {
         Schema newSchema = initSchema(type);
         if (newSchema != null) {
@@ -97,6 +149,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Initiate an anyOf schema.
+     * 
+     * @param type of JSON Schema which should be used
+     * @return this
+     */
     public T anyOf(SimpleType type) {
         Schema newSchema = initSchema(type);
         if (newSchema != null) {
@@ -110,12 +168,24 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     // </editor-fold>
     // <editor-fold desc="String builder">
+    
+    /**
+     * Initiate a JSON Schema as a root string schema.
+     * 
+     * @return this
+     */
     public T string() {
         currentSchema = new StringSchema();
         rootSchema = currentSchema;
         return (T) this;
     }
 
+    /**
+     * Set the pattern, only works if current schema is of type StringSchema
+     * 
+     * @param pattern to set
+     * @return this
+     */
     public T pattern(String pattern) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
@@ -125,15 +195,27 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
-    public T contentMediaType(String type) {
+    /**
+     * Set the content media type, only works if current schema is of type StringSchema
+     * 
+     * @param contentMediaType to set
+     * @return this
+     */
+    public T contentMediaType(String contentMediaType) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
         } else {
-            ((StringSchema) currentSchema).setContentMediaType(type);
+            ((StringSchema) currentSchema).setContentMediaType(contentMediaType);
         }
         return (T) this;
     }
 
+    /**
+     * Set the content encoding, only works if current schema is of type StringSchema
+     * 
+     * @param encoding to set
+     * @return this
+     */
     public T encoding(ContentEncoding encoding) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
@@ -143,6 +225,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the string format, only works if current schema is of type StringSchema
+     * 
+     * @param format to set
+     * @return this
+     */
     public T format(StringFormat format) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
@@ -152,6 +240,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the minimum length of the string, only works if current schema is of type StringSchema
+     * 
+     * @param minLength to set
+     * @return this
+     */
     public T minLength(int minLength) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
@@ -161,6 +255,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the maximum length of the string, only works if current schema is of type StringSchema
+     * 
+     * @param maxLength to set
+     * @return this
+     */
     public T maxLength(int maxLength) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
@@ -172,12 +272,22 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     // </editor-fold>
     // <editor-fold desc="Array builder">
+    /**
+     * Initiate a JSON Schema as an array schema.
+     * 
+     * @return this
+     */
     public T array() {
         currentSchema = new ArraySchema();
         rootSchema = currentSchema;
         return (T) this;
     }
 
+    /**
+     * Allow the use of additional items, only works if current schema is of type ArraySchema
+     * 
+     * @return this
+     */
     public T allowAdditionalItems() {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
@@ -187,6 +297,11 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Only allow unique items, only works if current schema is of type ArraySchema
+     * 
+     * @return this
+     */
     public T onlyUniqueItems() {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
@@ -196,6 +311,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the minimum amount of items allowed, only works if current schema is of type ArraySchema
+     * 
+     * @param minItems to set
+     * @return this
+     */
     public T minItems(int minItems) {
         if (ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
@@ -205,6 +326,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the maximum amount of items allowed, only works if current schema is of type ArraySchema
+     * 
+     * @param maxItems to set
+     * @return this
+     */
     public T maxItems(int maxItems) {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
@@ -214,6 +341,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Add an item to the array changes the current schema to a new one of selected type, only works if current schema is of type ArraySchema
+     * 
+     * @param type to add
+     * @return this
+     */
     public T item(SimpleType type) {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
@@ -229,6 +362,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Add a contain item changes the current schema to a new one of selected type, only works if current schema is of type ArraySchema
+     * 
+     * @param type to contain
+     * @return this
+     */
     public T contain(SimpleType type) {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
@@ -246,18 +385,35 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     // </editor-fold>
     // <editor-fold desc="Numeric builders">
+    
+    /**
+     * Initiate a JSON Schema as a number schema.
+     * 
+     * @return this
+     */
     public T number() {
         currentSchema = new NumberSchema();
         rootSchema = currentSchema;
         return (T) this;
     }
 
+    /**
+     * Initiate a JSON Schema as a integer schema.
+     * 
+     * @return this
+     */
     public T integer() {
         currentSchema = new IntegerSchema();
         rootSchema = currentSchema;
         return (T) this;
     }
 
+    /**
+     * Set the minimum allowed numeric number, only works if the current schema is a numeric type (integer or number)
+     * 
+     * @param minimum to set
+     * @return this
+     */
     public T minimum(double minimum) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
@@ -267,6 +423,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the exclusive minimum number allowed, only works if the current schema is a numeric type (integer or number)
+     * 
+     * @param exclusiveMinimum to set
+     * @return this
+     */
     public T exclusiveMinimum(double exclusiveMinimum) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
@@ -276,6 +438,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the maximum number allowed, only works if the current schema is a numeric type (integer or number)
+     * 
+     * @param maximum to set
+     * @return this
+     */
     public T maximum(double maximum) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
@@ -285,6 +453,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the exclusive maximum number allowed, only works if the current schema is a numeric type (integer or number)
+     * 
+     * @param exclusiveMaximum to set
+     * @return this
+     */
     public T exclusiveMaximum(double exclusiveMaximum) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
@@ -294,6 +468,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the multiple of constraint, only works if the current schema is a numeric type (integer or number)
+     * 
+     * @param multipleOf to set
+     * @return this
+     */
     public T multipleOf(double multipleOf) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
@@ -305,16 +485,37 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     // </editor-fold>
     // <editor-fold desc="Object builder">
+    
+    /**
+     * Initiate a JSON Schema as an object schema.
+     * 
+     * @return this
+     */
     public T object() {
         currentSchema = new ObjectSchema();
         rootSchema = currentSchema;
         return (T) this;
     }
 
+    /**
+     * Add a given property of type to the object, only works if the current schema is of type ObjectSchema.
+     * 
+     * @param propertyName to use
+     * @param type to create
+     * @return this
+     */
     public T property(String propertyName, SimpleType type) {
         return property(propertyName, type, false);
     }
 
+    /**
+     * Add a given property of type to the object, only works if the current schema is of type ObjectSchema.
+     * 
+     * @param propertyName to use
+     * @param type to create
+     * @param required
+     * @return this
+     */
     public T property(String propertyName, SimpleType type, boolean required) {
         if (!ensureSchemaOfType(ObjectSchema.class)) {
             System.out.println("Current schema not of type ObjectSchema");
@@ -333,6 +534,12 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+    /**
+     * Set the minimum amount of properties allowed, only works if the current schema is of type ObjectSchema.
+     * 
+     * @param minProperties to set
+     * @return this
+     */
     public T minProperties(int minProperties) {
         if (!ensureSchemaOfType(ObjectSchema.class)) {
             System.out.println("Current schema not of type ObjectSchema");
@@ -342,6 +549,13 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
+
+    /**
+     * Set the maximum amount of properties allowed, only works if the current schema is of type ObjectSchema.
+     * 
+     * @param maxProperties to set
+     * @return this
+     */
     public T maxProperties(int maxProperties) {
         if (!ensureSchemaOfType(ObjectSchema.class)) {
             System.out.println("Current schema not of type ObjectSchema");
@@ -356,12 +570,23 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return schemaClass.isInstance(currentSchema);
     }
 
+    /**
+     * Return the build Schema object of the root.
+     * 
+     * @return rootSchema
+     */
     public Schema build() {
         return rootSchema;
     }
 
+    /**
+     * Traverse to the parent Schema, only works if there are any.
+     * 
+     * @return 
+     */
     public T parent() {
-        currentSchema = parentList.poll();
+        if(parentList.size() > 0)
+            currentSchema = parentList.poll();
         return (T) this;
     }
 
