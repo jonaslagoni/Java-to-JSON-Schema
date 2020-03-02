@@ -13,24 +13,34 @@ import java.util.Deque;
  *
  * @author Lagoni
  */
-public class JsonSchemaBuilder {
+public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     private Deque<Schema> parentList = new ArrayDeque();
     private Schema rootSchema;
     private Schema currentSchema;
 
     // <editor-fold desc="Schema builder">
-    public JsonSchemaBuilder title(String title) {
+    public T nullSchema() {
+        currentSchema = new NullSchema();
+        return (T) this;
+    }
+
+    public T booleanSchema() {
+        currentSchema = new BooleanSchema();
+        return (T) this;
+    }
+
+    public T title(String title) {
         currentSchema.setTitle(title);
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder description(String description) {
+    public T description(String description) {
         currentSchema.setDescription(description);
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder elseDo() {
+    public T elseDo() {
         Schema newSchema = initSchemaFromCurrent();
         if (newSchema != null) {
             currentSchema.setSchemaElse(newSchema);
@@ -38,10 +48,10 @@ public class JsonSchemaBuilder {
         } else {
             System.out.println("Could not add else schema");
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder thenDo() {
+    public T thenDo() {
         Schema newSchema = initSchemaFromCurrent();
         if (newSchema != null) {
             currentSchema.setSchemaThen(newSchema);
@@ -49,10 +59,10 @@ public class JsonSchemaBuilder {
         } else {
             System.out.println("Could not add then schema");
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder ifCondition() {
+    public T ifCondition() {
         Schema newSchema = initSchemaFromCurrent();
         if (newSchema != null) {
             currentSchema.setSchemaIf(newSchema);
@@ -60,10 +70,10 @@ public class JsonSchemaBuilder {
         } else {
             System.out.println("Could not add then schema");
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder oneOf(SimpleType type) {
+    public T oneOf(SimpleType type) {
         Schema newSchema = initSchema(type);
         if (newSchema != null) {
             currentSchema.addOneOf(newSchema);
@@ -71,10 +81,10 @@ public class JsonSchemaBuilder {
         } else {
             System.out.println("Could not add schema");
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder allOf(SimpleType type) {
+    public T allOf(SimpleType type) {
         Schema newSchema = initSchema(type);
         if (newSchema != null) {
             currentSchema.addAllOf(newSchema);
@@ -82,10 +92,10 @@ public class JsonSchemaBuilder {
         } else {
             System.out.println("Could not add schema");
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder anyOf(SimpleType type) {
+    public T anyOf(SimpleType type) {
         Schema newSchema = initSchema(type);
         if (newSchema != null) {
             currentSchema.addAnyOf(newSchema);
@@ -93,104 +103,114 @@ public class JsonSchemaBuilder {
         } else {
             System.out.println("Could not add schema");
         }
-        return this;
+        return (T) this;
     }
 
     // </editor-fold>
     // <editor-fold desc="String builder">
-    public JsonSchemaBuilder pattern(String pattern) {
+    public T string() {
+        currentSchema = new StringSchema();
+        return (T) this;
+    }
+
+    public T pattern(String pattern) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
         } else {
             ((StringSchema) currentSchema).setPattern(pattern);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder contentMediaType(String type) {
+    public T contentMediaType(String type) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
         } else {
             ((StringSchema) currentSchema).setContentMediaType(type);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder encoding(ContentEncoding encoding) {
+    public T encoding(ContentEncoding encoding) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
         } else {
             ((StringSchema) currentSchema).setContentEncoding(encoding);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder format(StringFormat format) {
+    public T format(StringFormat format) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
         } else {
             ((StringSchema) currentSchema).setFormat(format);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder minLength(int minLength) {
+    public T minLength(int minLength) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
         } else {
             ((StringSchema) currentSchema).setMinLength(minLength);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder maxLength(int maxLength) {
+    public T maxLength(int maxLength) {
         if (!ensureSchemaOfType(StringSchema.class)) {
             System.out.println("Current schema not of type StringSchema");
         } else {
             ((StringSchema) currentSchema).setMaxLength(maxLength);
         }
-        return this;
+        return (T) this;
     }
 
     // </editor-fold>
     // <editor-fold desc="Array builder">
-    public JsonSchemaBuilder allowAdditionalItems() {
+    public T array() {
+        currentSchema = new ArraySchema();
+        return (T) this;
+    }
+
+    public T allowAdditionalItems() {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
         } else {
             ((ArraySchema) currentSchema).setAdditionalItems(true);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder onlyUniqueItems() {
+    public T onlyUniqueItems() {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
         } else {
             ((ArraySchema) currentSchema).setUniqueItems(true);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder minItems(int minItems) {
+    public T minItems(int minItems) {
         if (ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
         } else {
             ((ArraySchema) currentSchema).setMinItems(minItems);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder maxItems(int maxItems) {
+    public T maxItems(int maxItems) {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
         } else {
             ((ArraySchema) currentSchema).setMaxItems(maxItems);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder item(SimpleType type) {
+    public T item(SimpleType type) {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
         } else {
@@ -202,10 +222,10 @@ public class JsonSchemaBuilder {
                 System.out.println("Could not add schema");
             }
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder contain(SimpleType type) {
+    public T contain(SimpleType type) {
         if (!ensureSchemaOfType(ArraySchema.class)) {
             System.out.println("Current schema not of type ArraySchema");
         } else {
@@ -217,68 +237,78 @@ public class JsonSchemaBuilder {
                 System.out.println("Could not add schema");
             }
         }
-        return this;
+        return (T) this;
     }
 
     // </editor-fold>
     // <editor-fold desc="Numeric builders">
-    public JsonSchemaBuilder minimum(double minimum) {
+    public T number() {
+        currentSchema = new NumberSchema();
+        return (T) this;
+    }
+
+    public T integer() {
+        currentSchema = new IntegerSchema();
+        return (T) this;
+    }
+
+    public T minimum(double minimum) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
         } else {
             ((NumericSchema) currentSchema).setMinimum(minimum);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder exclusiveMinimum(double exclusiveMinimum) {
+    public T exclusiveMinimum(double exclusiveMinimum) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
         } else {
             ((NumericSchema) currentSchema).setExclusiveMinimum(exclusiveMinimum);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder maximum(double maximum) {
+    public T maximum(double maximum) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
         } else {
             ((NumericSchema) currentSchema).setMaximum(maximum);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder exclusiveMaximum(double exclusiveMaximum) {
+    public T exclusiveMaximum(double exclusiveMaximum) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
         } else {
             ((NumericSchema) currentSchema).setExclusiveMaximum(exclusiveMaximum);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder multipleOf(double multipleOf) {
+    public T multipleOf(double multipleOf) {
         if (!ensureSchemaOfType(NumericSchema.class)) {
             System.out.println("Current schema not of type NumericSchema");
         } else {
             ((NumericSchema) currentSchema).setMultipleOf(multipleOf);
         }
-        return this;
+        return (T) this;
     }
 
     // </editor-fold>
     // <editor-fold desc="Object builder">
-    public JsonSchemaBuilder object() {
+    public T object() {
         currentSchema = new ObjectSchema();
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder property(String propertyName, SimpleType type) {
+    public T property(String propertyName, SimpleType type) {
         return property(propertyName, type, false);
     }
 
-    public JsonSchemaBuilder property(String propertyName, SimpleType type, boolean required) {
+    public T property(String propertyName, SimpleType type, boolean required) {
         if (!ensureSchemaOfType(ObjectSchema.class)) {
             System.out.println("Current schema not of type ObjectSchema");
         } else {
@@ -293,25 +323,25 @@ public class JsonSchemaBuilder {
                 System.out.println("Could not add schema");
             }
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder minProperties(int minProperties) {
+    public T minProperties(int minProperties) {
         if (!ensureSchemaOfType(ObjectSchema.class)) {
             System.out.println("Current schema not of type ObjectSchema");
         } else {
             ((ObjectSchema) currentSchema).setMinProperties(minProperties);
         }
-        return this;
+        return (T) this;
     }
 
-    public JsonSchemaBuilder maxProperties(int maxProperties) {
+    public T maxProperties(int maxProperties) {
         if (!ensureSchemaOfType(ObjectSchema.class)) {
             System.out.println("Current schema not of type ObjectSchema");
         } else {
             ((ObjectSchema) currentSchema).setMaxProperties(maxProperties);
         }
-        return this;
+        return (T) this;
     }
 
     //</editor-fold>
@@ -323,9 +353,9 @@ public class JsonSchemaBuilder {
         return rootSchema;
     }
 
-    public JsonSchemaBuilder parent() {
+    public T parent() {
         currentSchema = parentList.poll();
-        return this;
+        return (T) this;
     }
 
     private void changeCurrentSchema(Schema newSchema) {
