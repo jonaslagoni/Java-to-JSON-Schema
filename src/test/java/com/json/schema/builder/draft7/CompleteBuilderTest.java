@@ -43,7 +43,7 @@ public class CompleteBuilderTest {
     public void testScenario1() throws IOException {
         System.out.println("object");
         JsonSchemaBuilder instance = new JsonSchemaBuilder();
-        new JsonSchemaBuilder().object().
+        instance.object().
                 property("id", SimpleType.INTEGER).
                 minimum(0).
                 description("Id of the streetlight.").parent().
