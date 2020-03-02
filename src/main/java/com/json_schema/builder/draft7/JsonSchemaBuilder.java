@@ -39,10 +39,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     private Schema currentSchema;
 
     // <editor-fold desc="Schema builder">
-    
     /**
      * Initiate a JSON Schema as a root Null schema.
-     * 
+     *
      * @return this
      */
     public T nullSchema() {
@@ -53,7 +52,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Initiate a JSON Schema as a root boolean schema.
-     * 
+     *
      * @return this
      */
     public T booleanSchema() {
@@ -64,7 +63,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Set the title of the current schema.
-     * 
+     *
      * @param title to set
      * @return this
      */
@@ -75,7 +74,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Set the description of the current schema.
-     * 
+     *
      * @param description to set
      * @return this
      */
@@ -85,8 +84,8 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Initiate an else schema
-     * 
+     * Initiate an else schema based on the current schema.
+     *
      * @return this
      */
     public T elseDo() {
@@ -101,8 +100,8 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Initiate a then schema
-     * 
+     * Initiate a then schema based on the current schema.
+     *
      * @return this
      */
     public T thenDo() {
@@ -116,10 +115,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
-    
     /**
-     * Initiate an if schema
-     * 
+     * Initiate an if schema based on the current schema.
+     *
      * @return this
      */
     public T ifCondition() {
@@ -135,7 +133,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Initiate a oneOf schema.
-     * 
+     *
      * @param type of JSON Schema which should be used
      * @return this
      */
@@ -152,7 +150,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Initiate an allOf schema.
-     * 
+     *
      * @param type of JSON Schema which should be used
      * @return this
      */
@@ -169,7 +167,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Initiate an anyOf schema.
-     * 
+     *
      * @param type of JSON Schema which should be used
      * @return this
      */
@@ -186,10 +184,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     // </editor-fold>
     // <editor-fold desc="String builder">
-    
     /**
      * Initiate a JSON Schema as a root string schema.
-     * 
+     *
      * @return this
      */
     public T string() {
@@ -200,7 +197,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Set the pattern, only works if current schema is of type StringSchema
-     * 
+     *
      * @param pattern to set
      * @return this
      */
@@ -214,8 +211,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the content media type, only works if current schema is of type StringSchema
-     * 
+     * Set the content media type, only works if current schema is of type
+     * StringSchema
+     *
      * @param contentMediaType to set
      * @return this
      */
@@ -229,8 +227,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the content encoding, only works if current schema is of type StringSchema
-     * 
+     * Set the content encoding, only works if current schema is of type
+     * StringSchema
+     *
      * @param encoding to set
      * @return this
      */
@@ -244,8 +243,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the string format, only works if current schema is of type StringSchema
-     * 
+     * Set the string format, only works if current schema is of type
+     * StringSchema
+     *
      * @param format to set
      * @return this
      */
@@ -259,8 +259,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the minimum length of the string, only works if current schema is of type StringSchema
-     * 
+     * Set the minimum length of the string, only works if current schema is of
+     * type StringSchema
+     *
      * @param minLength to set
      * @return this
      */
@@ -274,8 +275,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the maximum length of the string, only works if current schema is of type StringSchema
-     * 
+     * Set the maximum length of the string, only works if current schema is of
+     * type StringSchema
+     *
      * @param maxLength to set
      * @return this
      */
@@ -292,7 +294,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     // <editor-fold desc="Array builder">
     /**
      * Initiate a JSON Schema as an array schema.
-     * 
+     *
      * @return this
      */
     public T array() {
@@ -302,8 +304,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Allow the use of additional items, only works if current schema is of type ArraySchema
-     * 
+     * Allow the use of additional items, only works if current schema is of
+     * type ArraySchema
+     *
      * @return this
      */
     public T allowAdditionalItems() {
@@ -316,8 +319,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Only allow unique items, only works if current schema is of type ArraySchema
-     * 
+     * Only allow unique items, only works if current schema is of type
+     * ArraySchema
+     *
      * @return this
      */
     public T onlyUniqueItems() {
@@ -330,8 +334,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the minimum amount of items allowed, only works if current schema is of type ArraySchema
-     * 
+     * Set the minimum amount of items allowed, only works if current schema is
+     * of type ArraySchema
+     *
      * @param minItems to set
      * @return this
      */
@@ -345,8 +350,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the maximum amount of items allowed, only works if current schema is of type ArraySchema
-     * 
+     * Set the maximum amount of items allowed, only works if current schema is
+     * of type ArraySchema
+     *
      * @param maxItems to set
      * @return this
      */
@@ -360,8 +366,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Add an item to the array changes the current schema to a new one of selected type, only works if current schema is of type ArraySchema
-     * 
+     * Add an item to the array changes the current schema to a new one of
+     * selected type, only works if current schema is of type ArraySchema
+     *
      * @param type to add
      * @return this
      */
@@ -381,8 +388,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Add a contain item changes the current schema to a new one of selected type, only works if current schema is of type ArraySchema
-     * 
+     * Add a contain item changes the current schema to a new one of selected
+     * type, only works if current schema is of type ArraySchema
+     *
      * @param type to contain
      * @return this
      */
@@ -403,10 +411,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     // </editor-fold>
     // <editor-fold desc="Numeric builders">
-    
     /**
      * Initiate a JSON Schema as a number schema.
-     * 
+     *
      * @return this
      */
     public T number() {
@@ -417,7 +424,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Initiate a JSON Schema as a integer schema.
-     * 
+     *
      * @return this
      */
     public T integer() {
@@ -427,8 +434,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the minimum allowed numeric number, only works if the current schema is a numeric type (integer or number)
-     * 
+     * Set the minimum allowed numeric number, only works if the current schema
+     * is a numeric type (integer or number)
+     *
      * @param minimum to set
      * @return this
      */
@@ -442,8 +450,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the exclusive minimum number allowed, only works if the current schema is a numeric type (integer or number)
-     * 
+     * Set the exclusive minimum number allowed, only works if the current
+     * schema is a numeric type (integer or number)
+     *
      * @param exclusiveMinimum to set
      * @return this
      */
@@ -457,8 +466,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the maximum number allowed, only works if the current schema is a numeric type (integer or number)
-     * 
+     * Set the maximum number allowed, only works if the current schema is a
+     * numeric type (integer or number)
+     *
      * @param maximum to set
      * @return this
      */
@@ -472,8 +482,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the exclusive maximum number allowed, only works if the current schema is a numeric type (integer or number)
-     * 
+     * Set the exclusive maximum number allowed, only works if the current
+     * schema is a numeric type (integer or number)
+     *
      * @param exclusiveMaximum to set
      * @return this
      */
@@ -487,8 +498,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the multiple of constraint, only works if the current schema is a numeric type (integer or number)
-     * 
+     * Set the multiple of constraint, only works if the current schema is a
+     * numeric type (integer or number)
+     *
      * @param multipleOf to set
      * @return this
      */
@@ -503,10 +515,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     // </editor-fold>
     // <editor-fold desc="Object builder">
-    
     /**
      * Initiate a JSON Schema as an object schema.
-     * 
+     *
      * @return this
      */
     public T object() {
@@ -516,8 +527,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Add a given property of type to the object, only works if the current schema is of type ObjectSchema.
-     * 
+     * Add a given property of type to the object, only works if the current
+     * schema is of type ObjectSchema.
+     *
      * @param propertyName to use
      * @param type to create
      * @return this
@@ -527,8 +539,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Add a given property of type to the object, only works if the current schema is of type ObjectSchema.
-     * 
+     * Add a given property of type to the object, only works if the current
+     * schema is of type ObjectSchema.
+     *
      * @param propertyName to use
      * @param type to create
      * @param required
@@ -553,8 +566,9 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     /**
-     * Set the minimum amount of properties allowed, only works if the current schema is of type ObjectSchema.
-     * 
+     * Set the minimum amount of properties allowed, only works if the current
+     * schema is of type ObjectSchema.
+     *
      * @param minProperties to set
      * @return this
      */
@@ -567,10 +581,10 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
         return (T) this;
     }
 
-
     /**
-     * Set the maximum amount of properties allowed, only works if the current schema is of type ObjectSchema.
-     * 
+     * Set the maximum amount of properties allowed, only works if the current
+     * schema is of type ObjectSchema.
+     *
      * @param maxProperties to set
      * @return this
      */
@@ -590,7 +604,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Return the build Schema object of the root.
-     * 
+     *
      * @return rootSchema
      */
     public Schema build() {
@@ -599,12 +613,13 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
 
     /**
      * Traverse to the parent Schema, only works if there are any.
-     * 
-     * @return 
+     *
+     * @return
      */
     public T parent() {
-        if(parentList.size() > 0)
+        if (parentList.size() > 0) {
             currentSchema = parentList.poll();
+        }
         return (T) this;
     }
 
