@@ -22,11 +22,13 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     // <editor-fold desc="Schema builder">
     public T nullSchema() {
         currentSchema = new NullSchema();
+        rootSchema = currentSchema;
         return (T) this;
     }
 
     public T booleanSchema() {
         currentSchema = new BooleanSchema();
+        rootSchema = currentSchema;
         return (T) this;
     }
 
@@ -110,6 +112,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     // <editor-fold desc="String builder">
     public T string() {
         currentSchema = new StringSchema();
+        rootSchema = currentSchema;
         return (T) this;
     }
 
@@ -171,6 +174,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     // <editor-fold desc="Array builder">
     public T array() {
         currentSchema = new ArraySchema();
+        rootSchema = currentSchema;
         return (T) this;
     }
 
@@ -244,11 +248,13 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     // <editor-fold desc="Numeric builders">
     public T number() {
         currentSchema = new NumberSchema();
+        rootSchema = currentSchema;
         return (T) this;
     }
 
     public T integer() {
         currentSchema = new IntegerSchema();
+        rootSchema = currentSchema;
         return (T) this;
     }
 
@@ -301,6 +307,7 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     // <editor-fold desc="Object builder">
     public T object() {
         currentSchema = new ObjectSchema();
+        rootSchema = currentSchema;
         return (T) this;
     }
 
@@ -359,9 +366,6 @@ public class JsonSchemaBuilder<T extends JsonSchemaBuilder> {
     }
 
     private void changeCurrentSchema(Schema newSchema) {
-        if (parentList.isEmpty() && rootSchema == null) {
-            rootSchema = currentSchema;
-        }
         parentList.add(currentSchema);
         currentSchema = newSchema;
     }
